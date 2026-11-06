@@ -1,0 +1,15 @@
+{
+  "info": {"name":"Clinic Booking MVP - API Smoke Tests","_postman_id":"d451a35c-8e8a-4d37-a123-20d0d4bf5486","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json","description":"Nhập accessToken sau khi đăng nhập; còn lại phải thay ID thật trong MongoDB."},
+  "variable":[{"key":"baseUrl","value":"http://localhost:8080/api"},{"key":"accessToken","value":""},{"key":"childId","value":""},{"key":"doctorId","value":""},{"key":"serviceId","value":""}],
+  "item":[
+    {"name":"Health","request":{"method":"GET","url":"{{baseUrl}}/health"}},
+    {"name":"Đăng ký phụ huynh","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"name\":\"Nguyễn Văn A\",\"email\":\"demo-parent@example.com\",\"password\":\"DemoPassword123!\"}"},"url":"{{baseUrl}}/auth/register"}},
+    {"name":"Đăng nhập","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"email\":\"demo-parent@example.com\",\"password\":\"DemoPassword123!\"}"},"url":"{{baseUrl}}/auth/login"},"event":[{"listen":"test","script":{"type":"text/javascript","exec":["if (pm.response.code === 200) { pm.collectionVariables.set('accessToken', pm.response.json().accessToken); }"]}}]},
+    {"name":"Danh sách dịch vụ","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/catalog/services"}},
+    {"name":"Danh sách bác sĩ","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/catalog/doctors"}},
+    {"name":"Danh sách hồ sơ bé","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/children/mine"}},
+    {"name":"Tạo hồ sơ bé","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"name\":\"Bé An\",\"birthDate\":\"2021-01-14\",\"gender\":\"Nam\",\"allergies\":\"\",\"conditions\":\"\",\"consent\":true}"},"url":"{{baseUrl}}/children"}},
+    {"name":"Giờ khám còn trống","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/catalog/slots?doctorId={{doctorId}}&serviceId={{serviceId}}&date=2026-12-02"}},
+    {"name":"Đặt lịch","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"childId\":\"{{childId}}\",\"doctorId\":\"{{doctorId}}\",\"serviceId\":\"{{serviceId}}\",\"date\":\"2026-12-02\",\"time\":\"08:00\"}"},"url":"{{baseUrl}}/appointments"}}
+  ]
+}
