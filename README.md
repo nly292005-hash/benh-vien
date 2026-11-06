@@ -196,4 +196,5 @@ Kiểm thử thủ công quan trọng:
 - Khi cài bản cập nhật, cần chạy lại `npm --prefix client install` vì thêm thư viện `formik` và `yup`.
 - Đọc `BAREM_FIX_REPORT.md` trước khi demo. Giới hạn bảo mật và UAT vẫn áp dụng như trên.
 #   b e n h - v i e n  
+ #   B e n h v i e n N H i 1  
  
